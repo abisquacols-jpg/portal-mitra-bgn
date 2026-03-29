@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Informasi Calon Mitra</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <style>
+    :root{
+      --bgn-blue:#062b5b;
+      --bgn-gold:#c9a15f;
+      --line:#dfe4ea;
+      --soft:#f6f8fb;
+      --text:#1e2430;
+    }
+    .body{
+      background:#ffffff;
+      color:var(--text);
+      font-family:Arial, Helvetica, sans-serif;
+      font-size:12px;
+    }
+    .page-wrap{
+      max-width:980px;
+      margin:10px auto 40px;
+      padding:0 8px;
+    }
+    .title-main{
+      font-size:20px;
+      font-weight:700;
+      margin-bottom:10px;
+    }
+    .hero-card{
+      background:var(--bgn-blue);
+      color:#fff;
+      border-radius:10px;
+      padding:14px 16px 12px;
+      box-shadow:0 1px 2px rgba(0,0,0,.08);
+    }
+    .hero-logo{
+      width:54px;
+      height:54px;
+      border-radius:50%;
+      object-fit:cover;
+      border:2px solid rgba(255,255,255,.35);
+      background:#fff;
+    }
+    .status-pill{
+      display:inline-block;
+      padding:2px 10px;
+      border-radius:999px;
+      background:#735740;
+      border:1px solid #c89f64;
+      color:#fff;
+      font-size:11px;
+      line-height:1.3;
+      vertical-align:middle;
+      margin-left:6px;
+    }
+    .btn-verify{
+      background:var(--bgn-gold);
+      border:none;
+      color:#fff;
+      font-weight:600;
+      height:28px;
+      border-radius:6px;
+    }
+    .btn-verify:hover{ background:#b88f4a; color:#fff; }
+    .alert-custom{
+      border:1px solid #86b7d6;
+      background:#f7fbff;
+      border-radius:6px;
+      padding:10px 12px;
+      margin-top:10px;
+    }
+    .tabs-wrap{
+      overflow-x:auto;
+      white-space:nowrap;
+      border-bottom:1px solid #d8dde6;
+      margin-top:10px;
+    }
+    .tabs-wrap .nav-link{
+      color:#222;
+      font-weight:600;
+      border:none;
+      border-bottom:2px solid transparent;
+      border-radius:0;
+      padding:9px 12px;
+      background:none;
+    }
+    .tabs-wrap .nav-link.active{
+      color:#0d274f;
+      border-bottom-color:#0d274f;
+      background:none;
+    }
+    .badge-count{
+      font-size:10px;
+      background:#e9ecef;
+      color:#444;
+      margin-left:4px;
+    }
+    .section-card{
+      margin-top:14px;
+      border:1px solid var(--line);
+      border-radius:8px;
+      background:#fff;
+      overflow:hidden;
+    }
+    .section-header{
+      padding:12px 12px 6px;
+      font-weight:700;
+      font-size:15px;
+    }
+    .section-body{
+      padding:0 12px 12px;
+    }
+    .table-toolbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      margin-bottom:8px;
+    }
+    .toolbar-right{
+      display:flex;
+      gap:8px;
+      align-items:center;
+    }
+    .btn-bgn-sm{
+      background:var(--bgn-blue);
+      color:#fff;
+      border:none;
+      border-radius:6px;
+      padding:6px 10px;
+      font-size:11px;
+      font-weight:600;
+    }
+    .btn-bgn-sm:hover{ background:#0a3772; color:#fff; }
+    .search-sm{
+      width:150px;
+      height:28px;
+      font-size:11px;
+    }
+    table.table-custom{
+      width:100%;
+      border-collapse:collapse;
+      font-size:11px;
+    }
+    .table-custom th,
+    .table-custom td{
+      border-top:1px solid #edf0f4;
+      padding:8px 6px;
+      vertical-align:top;
+    }
+    .table-custom thead th{
+      color:#495057;
+      font-weight:700;
+      background:#fff;
+      white-space:nowrap;
+    }
+    .table-custom tbody tr:hover{
+      background:#fbfcfe;
+    }
+    .file-link{
+      color:#2d6cdf;
+      text-decoration:none;
+      word-break:break-all;
+    }
+    .file-link:hover{ text-decoration:underline; }
+    .action-link{
+      cursor:pointer;
+      text-decoration:none;
+      margin-right:10px;
+      font-size:11px;
+    }
+    .action-edit{ color:#0d6efd; }
+    .action-del{ color:#dc3545; }
+    .table-footer{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      border-top:1px solid #edf0f4;
+      padding:8px 2px 0;
+      color:#6c757d;
+      font-size:10px;
+    }
+    .rekening-box{
+      padding:12px;
+    }
+    .rekening-label{
+      font-size:11px;
+      margin-bottom:4px;
+      color:#444;
+    }
+    .rekening-preview{
+      margin-top:8px;
+      background:#6f6862;
+      color:#fff;
+      padding:4px 8px;
+      font-size:10px;
+      min-height:16px;
+    }
+    .floating-up{
+      position:fixed;
+      right:18px;
+      bottom:18px;
+      width:44px;
+      height:44px;
+      border-radius:50%;
+      border:none;
+      background:#0a2c5a;
+      color:#fff;
+      box-shadow:0 4px 14px rgba(0,0,0,.2);
+      z-index:99;
+    }
+    .mini-muted{
+      color:#6c757d;
+      font-size:10px;
+    }
+    .pointer{ cursor:pointer; }
+    .required::after{
+      content:" *";
+      color:#dc3545;
+      font-weight:700;
+    }
+    .small-input{
+      height:30px;
+      font-size:12px;
+    }
+            .content-card {
+            background: white;
+            padding: 26px;
+            border-radius: 16px;
+            margin-top: 20px;
+            border: 1px solid #e5e7eb;
+        }
+
+        /* Upload Logo */
+        #logoPreview{
+            width:70px;
+            height:70px;
+            object-fit:cover;
+            cursor:pointer;
+            border:1px solid #dee2e6;
+        }
+    .btn-verify {
+  height: 48px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+  </style>
+</head>
+<body>
+  <div class="page-wrap">
+    <div class="title-main">Informasi Calon Mitra</div>
+
+    <div class="hero-card">
+      <div class="d-flex justify-content-between align-items-start gap-3 flex-wrap">
+          
+       <div class="d-flex align-items-center">
+
+                <!-- Foto Logo Upload -->
+                <img src="logo.png" 
+                     id="logoPreview"
+                     class="rounded-circle me-3"
+                     onclick="document.getElementById('logoInput').click();">
+
+                <!-- INPUT FILE -->
+                <input type="file"
+                       id="logoInput"
+                       hidden
+                       accept="image/*"
+                       onchange="previewLogo(event)">
+
+                <div>
+            <div class="fw-bold" style="font-size:13px;">
+              Yayasan Annaja Maniis
+              <span id="heroStatus" class="status-pill">Belum Diverifikasi</span>
+            </div>
+            <div style="font-size:11px;"> VUBZME • 083167352611 • annajamaniis@gmail.com  </div>
+          </div>
+        </div>
+
+        <div class="text-end" style="font-size:11px;">
+          <div><strong id="mitraId"></strong> </div>
+          <div></div>
+        </div>
+      </div>
+
+      <div class="mt-2">
+       <button id="btnAjukan"
+        class="btn btn-verify w-100 d-flex align-items-center justify-content-center"
+        onclick="ajukanVerifikasi()">
+  <i class="bi bi-cloud-upload me-2"></i>
+  <span>Ajukan Verifikasi</span>
+</button>
+      </div>
+    </div>
+
+    <div id="infoAlert" class="alert-custom d-flex justify-content-between align-items-center">
+      <div>
+        <i class="bi bi-info-circle me-2"></i>
+        <strong>Belum Diverifikasi</strong> = Mitra baru mendaftarkan akun mitra dan belum mengajukan data legal untuk diverifikasi oleh tim data legal.
+      </div>
+      <button class="btn btn-sm" onclick="document.getElementById('infoAlert').style.display='none'">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+
+    <div class="tabs-wrap">
+      <ul class="nav nav-tabs flex-nowrap" id="mainTabs" role="tablist">
+        <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tabUmum" type="button">Umum</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tabLegal" type="button">Legal</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tabKeuangan" type="button">Keuangan</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tabCalon" type="button">Calon SPPG <span class="badge badge-count">0</span></button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tabMitra" type="button">Calon SPPG Mitra <span class="badge badge-count">0</span></button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tabPerwakilan" type="button">Perwakilan Yayasan <span class="badge badge-count">1</span></button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tabRiwayat" type="button">Riwayat Verifikasi Mitra <span class="badge badge-count">1</span></button></li>
+      </ul>
+    </div>
+
+    <div class="tab-content">
+      <div class="tab-pane fade" id="tabUmum">
+        <div class="section-card">
+          <div class="section-header">Informasi Umum</div>
+          <div class="section-body">
+            <div class="row g-2">
+              <div class="col-md-4">
+                <label class="form-label">Nama Yayasan</label>
+                <input class="form-control small-input" value="Yayasan Annajah Manis">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Email</label>
+                <input class="form-control small-input" value="annajamanis@gmail.com">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">No. Telepon</label>
+                <input class="form-control small-input" value="083167352611">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-pane fade show active" id="tabLegal">
+        <div class="section-card">
+          <div class="section-header required">Akta Badan Usaha</div>
+          <div class="section-body">
+            <div class="table-toolbar">
+              <div></div>
+              <div class="toolbar-right">
+                <input id="searchAkta" class="form-control form-control-sm search-sm" placeholder="Cari" oninput="renderAktaTable()">
+                <button class="btn-bgn-sm" data-bs-toggle="modal" data-bs-target="#modalAkta">
+                  <i class="bi bi-plus-circle me-1"></i> Tambah Akta
+                </button>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="table-custom">
+                <thead>
+                  <tr>
+                    <th>Tipe Akta</th>
+                    <th>Nomor Akta</th>
+                    <th>Tanggal Akta</th>
+                    <th>Nama Notaris</th>
+                    <th>Lampiran</th>
+                    <th width="90">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody id="aktaTableBody"></tbody>
+              </table>
+            </div>
+
+            <div class="table-footer">
+              <div id="aktaInfo">Menampilkan 1 hasil</div>
+              <div class="d-flex align-items-center gap-2">
+                <span>per halaman</span>
+                <select class="form-select form-select-sm" style="width:60px;" onchange="setPerPage('akta', this.value)">
+                  <option selected>10</option>
+                  <option>25</option>
+                  <option>50</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-card">
+          <div class="section-header required">SK Kemenkumham</div>
+          <div class="section-body">
+            <div class="table-toolbar">
+              <div></div>
+              <div class="toolbar-right">
+                <input id="searchSk" class="form-control form-control-sm search-sm" placeholder="Cari" oninput="renderSkTable()">
+                <button class="btn-bgn-sm" data-bs-toggle="modal" data-bs-target="#modalSK">
+                  <i class="bi bi-plus-circle me-1"></i> Tambah SK
+                </button>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="table-custom">
+                <thead>
+                  <tr>
+                    <th>Nomor SK</th>
+                    <th>Tanggal Terbit/SK</th>
+                    <th>Lampiran</th>
+                    <th width="90">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody id="skTableBody"></tbody>
+              </table>
+            </div>
+
+            <div class="table-footer">
+              <div id="skInfo">Menampilkan 1 hasil</div>
+              <div class="d-flex align-items-center gap-2">
+                <span>per halaman</span>
+                <select class="form-select form-select-sm" style="width:60px;" onchange="setPerPage('sk', this.value)">
+                  <option selected>10</option>
+                  <option>25</option>
+                  <option>50</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-card">
+          <div class="section-header">NB</div>
+          <div class="rekening-box">
+            <div class="rekening-label">Nomor Induk Berusaha (NIB)</div>
+            <input id="nibInput" class="form-control small-input" placeholder="Masukkan NIB" value="5101230048755">
+            <div class="d-flex gap-2 mt-2">
+              <button class="btn btn-sm btn-primary" onclick="simpanNIB()">Simpan NIB</button>
+              <button class="btn btn-sm btn-outline-secondary" onclick="copyValue('nibInput')">Copy NIB</button>
+            </div>
+
+            <div class="rekening-label mt-3">No. Rek</div>
+            <input id="rekeningInput" class="form-control small-input" placeholder="Masukkan nomor rekening" value="1110009282817">
+            <div class="d-flex gap-2 mt-2">
+              <button class="btn btn-sm btn-primary" onclick="simpanRekening()">Simpan Rekening</button>
+              <button class="btn btn-sm btn-outline-secondary" onclick="copyValue('rekeningInput')">Copy Rekening</button>
+            </div>
+
+            <div id="rekeningPreview" class="rekening-preview mt-2"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-pane fade" id="tabKeuangan">
+        <div class="section-card">
+          <div class="section-header">Keuangan</div>
+          <div class="section-body">
+            <div class="mini-muted">Konten keuangan dapat dikembangkan ke backend/API.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-pane fade" id="tabCalon">
+        <div class="section-card"><div class="section-body pt-3">Belum ada data calon SPPG.</div></div>
+      </div>
+
+      <div class="tab-pane fade" id="tabMitra">
+        <div class="section-card"><div class="section-body pt-3">Belum ada data calon SPPG mitra.</div></div>
+      </div>
+
+      <div class="tab-pane fade" id="tabPerwakilan">
+        <div class="section-card"><div class="section-body pt-3">1 data perwakilan yayasan tersedia.</div></div>
+      </div>
+
+      <div class="tab-pane fade" id="tabRiwayat">
+        <div class="section-card"><div class="section-body pt-3">Riwayat verifikasi akan tampil di sini.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <button class="floating-up" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    <i class="bi bi-arrow-up"></i>
+  </button>
+
+  <!-- Modal Akta -->
+  <div class="modal fade" id="modalAkta" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h6 class="modal-title">Tambah / Edit Akta</h6>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="aktaEditIndex">
+          <div class="row g-2">
+            <div class="col-md-3">
+              <label class="form-label">Tipe Akta</label>
+              <select id="aktaTipe" class="form-select small-input">
+                <option>Pendirian</option>
+                <option>Perubahan</option>
+                <option>Terakhir</option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <label class="form-label">Nomor Akta</label>
+              <input id="aktaNomor" class="form-control small-input">
+            </div>
+            <div class="col-md-2">
+              <label class="form-label">Tanggal</label>
+              <input id="aktaTanggal" type="date" class="form-control small-input">
+            </div>
+            <div class="col-md-2">
+              <label class="form-label">Notaris</label>
+              <input id="aktaNotaris" class="form-control small-input">
+            </div>
+            <div class="col-md-2">
+              <label class="form-label">Lampiran</label>
+              <input id="aktaLampiran" type="file" class="form-control small-input">
+            </div>
+          </div>
+          <div class="mini-muted mt-2">Lampiran akan disimpan sebagai nama file di browser.</div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Batal</button>
+          <button class="btn btn-primary btn-sm" onclick="saveAkta()">Simpan</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal SK -->
+  <div class="modal fade" id="modalSK" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h6 class="modal-title">Tambah / Edit SK Kemenkumham</h6>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="skEditIndex">
+          <div class="row g-2">
+            <div class="col-md-5">
+              <label class="form-label">Nomor SK</label>
+              <input id="skNomor" class="form-control small-input">
+            </div>
+            <div class="col-md-3">
+              <label class="form-label">Tanggal Terbit</label>
+              <input id="skTanggal" type="date" class="form-control small-input">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Lampiran</label>
+              <input id="skLampiran" type="file" class="form-control small-input">
+            </div>
+          </div>
+          <div class="mini-muted mt-2">Lampiran akan disimpan sebagai nama file di browser.</div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Batal</button>
+          <button class="btn btn-primary btn-sm" onclick="saveSK()">Simpan</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    let perPage = { akta: 10, sk: 10 };
+
+    let aktaData = JSON.parse(localStorage.getItem('aktaData') || 'null') || [
+      {
+        tipe: 'Pendirian',
+        nomor: 'AHU-0000488.AH.02.01.TAHUN.2022',
+        tanggal: '2022-12-22',
+        notaris: 'M.Hum., SH., M.Kn',
+        lampiran: 'AHU-0000488-AH-02-01-TAHUN-2022.pdf'
+      }
+    ];
+
+    let skData = JSON.parse(localStorage.getItem('skData') || 'null') || [
+      {
+        nomor: 'AHU-0000488.AH.01.01.TAHUN.2022',
+        tanggal: '2022-12-22',
+        lampiran: 'AHU-0000488-AH-01-01-TAHUN-2022.pdf'
+      }
+    ];
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderAktaTable();
+      renderSkTable();
+      loadSavedMisc();
+    });
+
+    function saveStorage(){
+      localStorage.setItem('aktaData', JSON.stringify(aktaData));
+      localStorage.setItem('skData', JSON.stringify(skData));
+    }
+
+    function escapeHtml(text){
+      const div = document.createElement('div');
+      div.innerText = text ?? '';
+      return div.innerHTML;
+    }
+
+    function renderAktaTable(){
+      const keyword = document.getElementById('searchAkta').value.toLowerCase().trim();
+      const body = document.getElementById('aktaTableBody');
+
+      const filtered = aktaData.filter(item =>
+        Object.values(item).join(' ').toLowerCase().includes(keyword)
+      );
+
+      body.innerHTML = filtered.slice(0, perPage.akta).map((item, index) => `
+        <tr>
+          <td>${escapeHtml(item.tipe)}</td>
+          <td>${escapeHtml(item.nomor)}</td>
+          <td>${escapeHtml(item.tanggal)}</td>
+          <td>${escapeHtml(item.notaris)}</td>
+          <td>
+            <a href="javascript:void(0)" class="file-link" onclick="copyFileName('${encodeURIComponent(item.lampiran)}')">
+              ${escapeHtml(item.lampiran)}
+            </a>
+          </td>
+          <td>
+            <a class="action-link action-edit" onclick="editAkta(${aktaData.indexOf(item)})"><i class="bi bi-pencil-square"></i> Ubah</a>
+            <a class="action-link action-del" onclick="deleteAkta(${aktaData.indexOf(item)})"><i class="bi bi-trash"></i> Hapus</a>
+          </td>
+        </tr>
+      `).join('');
+
+      if (!filtered.length) {
+        body.innerHTML = `<tr><td colspan="6" class="text-center text-muted py-3">Tidak ada data</td></tr>`;
+      }
+
+      document.getElementById('aktaInfo').innerText = `Menampilkan ${filtered.length} hasil`;
+    }
+
+    function renderSkTable(){
+      const keyword = document.getElementById('searchSk').value.toLowerCase().trim();
+      const body = document.getElementById('skTableBody');
+
+      const filtered = skData.filter(item =>
+        Object.values(item).join(' ').toLowerCase().includes(keyword)
+      );
+
+      body.innerHTML = filtered.slice(0, perPage.sk).map((item, index) => `
+        <tr>
+          <td>${escapeHtml(item.nomor)}</td>
+          <td>${escapeHtml(item.tanggal)}</td>
+          <td>
+            <a href="javascript:void(0)" class="file-link" onclick="copyFileName('${encodeURIComponent(item.lampiran)}')">
+              ${escapeHtml(item.lampiran)}
+            </a>
+          </td>
+          <td>
+            <a class="action-link action-edit" onclick="editSK(${skData.indexOf(item)})"><i class="bi bi-pencil-square"></i> Ubah</a>
+            <a class="action-link action-del" onclick="deleteSK(${skData.indexOf(item)})"><i class="bi bi-trash"></i> Hapus</a>
+          </td>
+        </tr>
+      `).join('');
+
+      if (!filtered.length) {
+        body.innerHTML = `<tr><td colspan="4" class="text-center text-muted py-3">Tidak ada data</td></tr>`;
+      }
+
+      document.getElementById('skInfo').innerText = `Menampilkan ${filtered.length} hasil`;
+    }
+
+    function setPerPage(type, value){
+      perPage[type] = Number(value);
+      if(type === 'akta') renderAktaTable();
+      if(type === 'sk') renderSkTable();
+    }
+
+    function saveAkta(){
+      const idx = document.getElementById('aktaEditIndex').value;
+      const tipe = document.getElementById('aktaTipe').value.trim();
+      const nomor = document.getElementById('aktaNomor').value.trim();
+      const tanggal = document.getElementById('aktaTanggal').value;
+      const notaris = document.getElementById('aktaNotaris').value.trim();
+      const lampiranFile = document.getElementById('aktaLampiran').files[0];
+      const lampiranName = lampiranFile ? lampiranFile.name : '';
+
+      if(!nomor || !tanggal || !notaris){
+        alert('Lengkapi data akta terlebih dahulu.');
+        return;
+      }
+
+      if(idx === ''){
+        aktaData.push({
+          tipe, nomor, tanggal, notaris,
+          lampiran: lampiranName || 'lampiran-akta.pdf'
+        });
+      } else {
+        const old = aktaData[idx];
+        aktaData[idx] = {
+          tipe, nomor, tanggal, notaris,
+          lampiran: lampiranName || old.lampiran
+        };
+      }
+
+      saveStorage();
+      renderAktaTable();
+      clearAktaForm();
+      bootstrap.Modal.getInstance(document.getElementById('modalAkta')).hide();
+    }
+
+    function editAkta(index){
+      const item = aktaData[index];
+      document.getElementById('aktaEditIndex').value = index;
+      document.getElementById('aktaTipe').value = item.tipe;
+      document.getElementById('aktaNomor').value = item.nomor;
+      document.getElementById('aktaTanggal').value = item.tanggal;
+      document.getElementById('aktaNotaris').value = item.notaris;
+      new bootstrap.Modal(document.getElementById('modalAkta')).show();
+    }
+
+    function deleteAkta(index){
+      if(confirm('Hapus data akta ini?')){
+        aktaData.splice(index,1);
+        saveStorage();
+        renderAktaTable();
+      }
+    }
+
+    function clearAktaForm(){
+      document.getElementById('aktaEditIndex').value = '';
+      document.getElementById('aktaTipe').value = 'Pendirian';
+      document.getElementById('aktaNomor').value = '';
+      document.getElementById('aktaTanggal').value = '';
+      document.getElementById('aktaNotaris').value = '';
+      document.getElementById('aktaLampiran').value = '';
+    }
+
+    function saveSK(){
+      const idx = document.getElementById('skEditIndex').value;
+      const nomor = document.getElementById('skNomor').value.trim();
+      const tanggal = document.getElementById('skTanggal').value;
+      const lampiranFile = document.getElementById('skLampiran').files[0];
+      const lampiranName = lampiranFile ? lampiranFile.name : '';
+
+      if(!nomor || !tanggal){
+        alert('Lengkapi data SK terlebih dahulu.');
+        return;
+      }
+
+      if(idx === ''){
+        skData.push({
+          nomor, tanggal,
+          lampiran: lampiranName || 'lampiran-sk.pdf'
+        });
+      } else {
+        const old = skData[idx];
+        skData[idx] = {
+          nomor, tanggal,
+          lampiran: lampiranName || old.lampiran
+        };
+      }
+
+      saveStorage();
+      renderSkTable();
+      clearSKForm();
+      bootstrap.Modal.getInstance(document.getElementById('modalSK')).hide();
+    }
+
+    function editSK(index){
+      const item = skData[index];
+      document.getElementById('skEditIndex').value = index;
+      document.getElementById('skNomor').value = item.nomor;
+      document.getElementById('skTanggal').value = item.tanggal;
+      new bootstrap.Modal(document.getElementById('modalSK')).show();
+    }
+
+    function deleteSK(index){
+      if(confirm('Hapus data SK ini?')){
+        skData.splice(index,1);
+        saveStorage();
+        renderSkTable();
+      }
+    }
+
+    function clearSKForm(){
+      document.getElementById('skEditIndex').value = '';
+      document.getElementById('skNomor').value = '';
+      document.getElementById('skTanggal').value = '';
+      document.getElementById('skLampiran').value = '';
+    }
+
+    function copyFileName(encoded){
+      const text = decodeURIComponent(encoded);
+      navigator.clipboard.writeText(text);
+      alert('Nama lampiran disalin: ' + text);
+    }
+
+    function copyText(id){
+      const text = document.getElementById(id).innerText;
+      navigator.clipboard.writeText(text);
+      alert('Berhasil disalin: ' + text);
+    }
+
+    function copyValue(id){
+      const text = document.getElementById(id).value;
+      navigator.clipboard.writeText(text);
+      alert('Berhasil disalin: ' + text);
+    }
+
+    function ajukanVerifikasi(){
+      const status = document.getElementById('heroStatus');
+      const btn = document.getElementById('btnAjukan');
+      status.innerText = 'Menunggu Verifikasi';
+      status.style.background = '#8a6d3b';
+      btn.innerHTML = '<i class="bi bi-hourglass-split me-1"></i> Menunggu Verifikasi';
+      btn.disabled = true;
+      localStorage.setItem('statusVerifikasi', 'Menunggu Verifikasi');
+      alert('Pengajuan verifikasi berhasil dikirim.');
+    }
+
+    function simpanNIB(){
+      const value = document.getElementById('nibInput').value.trim();
+      localStorage.setItem('savedNIB', value);
+      alert('NIB berhasil disimpan.');
+    }
+
+    function simpanRekening(){
+      const value = document.getElementById('rekeningInput').value.trim();
+      localStorage.setItem('savedRekening', value);
+      document.getElementById('rekeningPreview').innerText = value || '-';
+      alert('Nomor rekening berhasil disimpan.');
+    }
+
+    function loadSavedMisc(){
+      const savedNIB = localStorage.getItem('savedNIB');
+      const savedRek = localStorage.getItem('savedRekening');
+      const savedStatus = localStorage.getItem('statusVerifikasi');
+
+      if(savedNIB !== null) document.getElementById('nibInput').value = savedNIB;
+      if(savedRek !== null){
+        document.getElementById('rekeningInput').value = savedRek;
+        document.getElementById('rekeningPreview').innerText = savedRek;
+      } else {
+        document.getElementById('rekeningPreview').innerText = document.getElementById('rekeningInput').value;
+      }
+
+      if(savedStatus === 'Menunggu Verifikasi'){
+        const status = document.getElementById('heroStatus');
+        const btn = document.getElementById('btnAjukan');
+        status.innerText = savedStatus;
+        status.style.background = '#8a6d3b';
+        btn.innerHTML = '<i class="bi bi-hourglass-split me-1"></i> Menunggu Verifikasi';
+        btn.disabled = true;
+      }
+    }
+
+    document.getElementById('modalAkta').addEventListener('hidden.bs.modal', clearAktaForm);
+    document.getElementById('modalSK').addEventListener('hidden.bs.modal', clearSKForm);
+  </script>
+  <script>
+function previewLogo(event){
+    const reader = new FileReader();
+    reader.onload = function(){
+        document.getElementById('logoPreview').src = reader.result;
+        document.getElementById('logoPreview2').src = reader.result;
+    }
+    reader.readAsDataURL(event.target.files[0]);
+}
+
+function previewLogo2(event){
+    const reader = new FileReader();
+    reader.onload = function(){
+        document.getElementById('logoPreview2').src = reader.result;
+        document.getElementById('logoPreview').src = reader.result;
+    }
+    reader.readAsDataURL(event.target.files[0]);
+}
+</script>
+</body>
+</html>
+
